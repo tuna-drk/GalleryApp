@@ -1,0 +1,69 @@
+@{
+    ViewData["Title"] = "Erişim Reddedildi";
+}
+
+<div class="container">
+    <div class="row justify-content-center">
+        <div class="col-md-6">
+            <div class="card shadow-lg" style="background: rgba(30, 30, 30, 0.9); border: 1px solid rgba(255, 255, 255, 0.1); border-radius: 20px;">
+                <div class="card-header text-center" style="background: linear-gradient(45deg, #dc3545, #c82333); border-radius: 20px 20px 0 0; border: none;">
+                    <h2 class="text-white mb-0">
+                        <i class="fas fa-exclamation-triangle me-2"></i>Erişim Reddedildi
+                    </h2>
+                </div>
+                <div class="card-body p-4 text-center">
+                    <div class="mb-4">
+                        <i class="fas fa-lock fa-5x text-danger mb-3"></i>
+                        <h4 class="text-white">Bu sayfaya erişim yetkiniz yok!</h4>
+                    </div>
+                    
+                    <p class="text-light mb-4">
+                        Bu işlemi gerçekleştirmek için <strong>Admin</strong> yetkisine sahip olmanız gerekiyor.
+                    </p>
+
+                    <div class="alert alert-warning" role="alert">
+                        <i class="fas fa-info-circle me-2"></i>
+                        <strong>Çözüm:</strong> Admin hesabıyla giriş yapın veya yöneticinizle iletişime geçin.
+                    </div>
+
+                    <div class="d-grid gap-2">
+                        <a asp-controller="Home" asp-action="Index" class="btn btn-primary btn-lg" style="border-radius: 10px;">
+                            <i class="fas fa-home me-2"></i>Ana Sayfaya Dön
+                        </a>
+                        
+                        @if (!User.Identity!.IsAuthenticated)
+                        {
+                            <a asp-controller="Account" asp-action="Login" class="btn btn-success btn-lg" style="border-radius: 10px;">
+                                <i class="fas fa-sign-in-alt me-2"></i>Giriş Yap
+                            </a>
+                        }
+                        else
+                        {
+                            <a asp-controller="Account" asp-action="Logout" class="btn btn-secondary btn-lg" style="border-radius: 10px;">
+                                <i class="fas fa-sign-out-alt me-2"></i>Farklı Hesap ile Giriş Yap
+                            </a>
+                        }
+                    </div>
+
+                    <hr style="border-color: rgba(255, 255, 255, 0.2);">
+                    
+                    <div class="text-center">
+                        <small class="text-muted">
+                            <i class="fas fa-user-shield me-1"></i>
+                            Kullanıcı: @User.Identity.Name | 
+                            Roller: @string.Join(", ", User.Claims.Where(c => c.Type == "http://schemas.microsoft.com/ws/2008/06/identity/claims/role").Select(c => c.Value))
+                        </small>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<style>
+    .alert {
+        background: rgba(255, 193, 7, 0.1);
+        border: 1px solid rgba(255, 193, 7, 0.3);
+        color: #ffc107;
+    }
+</style>

@@ -1,0 +1,118 @@
+@model IEnumerable<GalleryApp.Models.Photo>
+
+@{
+    ViewData["Title"] = "Fotoğraf Galerisi";
+}
+
+<div class="container-fluid">
+    <div class="row">
+        <div class="col-12">
+            <div class="d-flex justify-content-between align-items-center mb-4">
+                <h1 class="display-4 text-primary">
+                    <i class="fas fa-images"></i> Fotoğraf Galerisi
+                </h1>
+                <a asp-action="Create" class="btn btn-success btn-lg">
+                    <i class="fas fa-plus"></i> Yeni Fotoğraf Ekle
+                </a>
+            </div>
+
+            @if (TempData["SuccessMessage"] != null)
+            {
+                <div class="alert alert-success alert-dismissible fade show" role="alert">
+                    <i class="fas fa-check-circle"></i> @TempData["SuccessMessage"]
+                    <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
+                </div>
+            }
+
+            @if (Model.Any())
+            {
+                <div class="row">
+                    @foreach (var photo in Model)
+                    {
+                        <div class="col-lg-4 col-md-6 mb-4">
+                            <div class="card h-100 shadow-sm photo-card">
+                                <div class="position-relative">
+                                    <img src="@photo.ImageUrl" class="card-img-top photo-image" alt="@photo.Title" 
+                                         onerror="this.src='https://via.placeholder.com/400x300/6c757d/ffffff?text=Fotoğraf+Yok'">
+                                    @if (photo.Category != null)
+                                    {
+                                        <div class="position-absolute top-0 end-0 m-2">
+                                            <span class="badge bg-primary">@photo.Category.Name</span>
+                                        </div>
+                                    }
+                                </div>
+                                
+                                <div class="card-body d-flex flex-column">
+                                    <h5 class="card-title text-primary">@photo.Title</h5>
+                                    
+                                    @if (!string.IsNullOrEmpty(photo.Description))
+                                    {
+                                        <p class="card-text flex-grow-1">@photo.Description</p>
+                                    }
+
+                                    <div class="mt-auto">
+                                        <small class="text-muted">
+                                            <i class="fas fa-calendar"></i> @photo.UploadDate.ToString("dd.MM.yyyy")
+                                        </small>
+                                    </div>
+                                </div>
+
+                                <div class="card-footer bg-transparent">
+                                    <div class="btn-group w-100" role="group">
+                                        <a asp-action="Details" asp-route-id="@photo.Id" 
+                                           class="btn btn-outline-primary btn-sm">
+                                            <i class="fas fa-eye"></i> Detay
+                                        </a>
+                                        <a asp-action="Edit" asp-route-id="@photo.Id" 
+                                           class="btn btn-outline-warning btn-sm">
+                                            <i class="fas fa-edit"></i> Düzenle
+                                        </a>
+                                        <a asp-action="Delete" asp-route-id="@photo.Id" 
+                                           class="btn btn-outline-danger btn-sm">
+                                            <i class="fas fa-trash"></i> Sil
+                                        </a>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    }
+                </div>
+            }
+            else
+            {
+                <div class="text-center py-5">
+                    <i class="fas fa-images fa-5x text-muted mb-4"></i>
+                    <h3 class="text-muted">Henüz hiç fotoğraf eklenmemiş</h3>
+                    <p class="text-muted">İlk fotoğrafı eklemek için yukarıdaki butona tıklayın.</p>
+                    <a asp-action="Create" class="btn btn-primary btn-lg">
+                        <i class="fas fa-plus"></i> İlk Fotoğrafı Ekle
+                    </a>
+                </div>
+            }
+        </div>
+    </div>
+</div>
+
+<style>
+    .photo-card {
+        transition: transform 0.3s ease, box-shadow 0.3s ease;
+        border: none;
+        border-radius: 15px;
+    }
+
+    .photo-card:hover {
+        transform: translateY(-5px);
+        box-shadow: 0 8px 25px rgba(0,0,0,0.15) !important;
+    }
+
+    .photo-image {
+        height: 250px;
+        object-fit: cover;
+        border-radius: 15px 15px 0 0;
+    }
+
+    .card-footer {
+        border-top: 1px solid rgba(0,0,0,0.1);
+        border-radius: 0 0 15px 15px !important;
+    }
+</style>

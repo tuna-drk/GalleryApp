@@ -1,0 +1,478 @@
+﻿@{
+    ViewData["Title"] = "Ana Sayfa";
+}
+
+
+<style>
+    * {
+        box-sizing: border-box;
+    }
+    
+    body {
+        background: radial-gradient(ellipse at center, #0a0a0a 0%, #000000 100%);
+        color: #ffffff;
+        min-height: 100vh;
+        font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        overflow-x: hidden;
+    }
+    
+    /* Animated background particles */
+    body::before {
+        content: '';
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background: 
+            radial-gradient(circle at 20% 80%, rgba(0, 123, 255, 0.1) 0%, transparent 50%),
+            radial-gradient(circle at 80% 20%, rgba(40, 167, 69, 0.1) 0%, transparent 50%),
+            radial-gradient(circle at 40% 40%, rgba(255, 193, 7, 0.05) 0%, transparent 50%);
+        animation: backgroundFloat 20s ease-in-out infinite;
+        z-index: -1;
+    }
+    
+    @@keyframes backgroundFloat {
+        0%, 100% { transform: translateY(0px) rotate(0deg); }
+        50% { transform: translateY(-20px) rotate(1deg); }
+    }
+    
+    .hero-section {
+        background: linear-gradient(135deg, 
+            rgba(0, 0, 0, 0.9) 0%, 
+            rgba(26, 26, 26, 0.8) 50%, 
+            rgba(45, 45, 45, 0.9) 100%);
+        backdrop-filter: blur(20px);
+        border: 1px solid rgba(255, 255, 255, 0.1);
+        border-radius: 30px;
+        padding: 5rem 3rem;
+        margin-bottom: 4rem;
+        position: relative;
+        overflow: hidden;
+        box-shadow: 
+            0 25px 50px rgba(0, 0, 0, 0.5),
+            inset 0 1px 0 rgba(255, 255, 255, 0.1);
+    }
+    
+    .hero-section::before {
+        content: '';
+        position: absolute;
+        top: -50%;
+        left: -50%;
+        width: 200%;
+        height: 200%;
+        background: conic-gradient(
+            transparent 0deg,
+            rgba(0, 123, 255, 0.1) 90deg,
+            transparent 180deg,
+            rgba(40, 167, 69, 0.1) 270deg,
+            transparent 360deg
+        );
+        animation: rotate 10s linear infinite;
+        z-index: -1;
+    }
+    
+    @@keyframes rotate {
+        from { transform: rotate(0deg); }
+        to { transform: rotate(360deg); }
+    }
+    
+    .hero-content {
+        position: relative;
+        z-index: 2;
+        text-align: center;
+    }
+    
+    .glow-text {
+        background: linear-gradient(45deg, #007bff, #00d4ff, #007bff);
+        background-size: 200% 200%;
+        -webkit-background-clip: text;
+        -webkit-text-fill-color: transparent;
+        background-clip: text;
+        animation: gradientShift 3s ease-in-out infinite, textGlow 2s ease-in-out infinite alternate;
+        font-weight: 800;
+        letter-spacing: 2px;
+    }
+    
+    @@keyframes gradientShift {
+        0%, 100% { background-position: 0% 50%; }
+        50% { background-position: 100% 50%; }
+    }
+    
+    @@keyframes textGlow {
+        from { 
+            filter: drop-shadow(0 0 20px rgba(0, 123, 255, 0.5));
+            text-shadow: 0 0 30px rgba(0, 123, 255, 0.3);
+        }
+        to { 
+            filter: drop-shadow(0 0 40px rgba(0, 123, 255, 0.8));
+            text-shadow: 0 0 50px rgba(0, 123, 255, 0.6);
+        }
+    }
+    
+    .feature-card {
+        background: rgba(30, 30, 30, 0.8);
+        backdrop-filter: blur(20px);
+        border: 1px solid rgba(255, 255, 255, 0.1);
+        border-radius: 25px;
+        transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+        position: relative;
+        overflow: hidden;
+        box-shadow: 
+            0 10px 30px rgba(0, 0, 0, 0.3),
+            inset 0 1px 0 rgba(255, 255, 255, 0.1);
+    }
+    
+    .feature-card::before {
+        content: '';
+        position: absolute;
+        top: 0;
+        left: -100%;
+        width: 100%;
+        height: 100%;
+        background: linear-gradient(
+            90deg, 
+            transparent, 
+            rgba(255, 255, 255, 0.2), 
+            transparent
+        );
+        transition: left 0.6s ease;
+    }
+    
+    .feature-card:hover::before {
+        left: 100%;
+    }
+    
+    .feature-card:hover {
+        transform: translateY(-15px) scale(1.03);
+        box-shadow: 
+            0 30px 60px rgba(0, 0, 0, 0.4),
+            0 0 40px rgba(0, 123, 255, 0.3),
+            inset 0 1px 0 rgba(255, 255, 255, 0.2);
+        border-color: rgba(0, 123, 255, 0.5);
+    }
+    
+    .feature-icon {
+        background: linear-gradient(45deg, #007bff, #00d4ff, #007bff);
+        background-size: 200% 200%;
+        -webkit-background-clip: text;
+        -webkit-text-fill-color: transparent;
+        background-clip: text;
+        animation: gradientShift 3s ease-in-out infinite;
+        filter: drop-shadow(0 0 20px rgba(0, 123, 255, 0.5));
+        transition: all 0.3s ease;
+    }
+    
+    .feature-card:hover .feature-icon {
+        transform: scale(1.1) rotate(5deg);
+    }
+    
+    .btn-neon {
+        background: linear-gradient(45deg, #007bff, #00d4ff);
+        border: none;
+        border-radius: 30px;
+        padding: 15px 35px;
+        font-weight: 700;
+        text-transform: uppercase;
+        letter-spacing: 2px;
+        transition: all 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+        box-shadow: 
+            0 8px 25px rgba(0, 123, 255, 0.4),
+            inset 0 1px 0 rgba(255, 255, 255, 0.2);
+        position: relative;
+        overflow: hidden;
+    }
+    
+    .btn-neon::before {
+        content: '';
+        position: absolute;
+        top: 0;
+        left: -100%;
+        width: 100%;
+        height: 100%;
+        background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.3), transparent);
+        transition: left 0.5s;
+    }
+    
+    .btn-neon:hover::before {
+        left: 100%;
+    }
+    
+    .btn-neon:hover {
+        transform: translateY(-3px) scale(1.05);
+        box-shadow: 
+            0 15px 35px rgba(0, 123, 255, 0.6),
+            inset 0 1px 0 rgba(255, 255, 255, 0.3);
+        background: linear-gradient(45deg, #0056b3, #0099cc);
+    }
+    
+    .btn-success-neon {
+        background: linear-gradient(45deg, #28a745, #20c997);
+        box-shadow: 
+            0 8px 25px rgba(40, 167, 69, 0.4),
+            inset 0 1px 0 rgba(255, 255, 255, 0.2);
+    }
+    
+    .btn-success-neon:hover {
+        background: linear-gradient(45deg, #1e7e34, #17a2b8);
+        box-shadow: 
+            0 15px 35px rgba(40, 167, 69, 0.6),
+            inset 0 1px 0 rgba(255, 255, 255, 0.3);
+    }
+    
+    .btn-warning-neon {
+        background: linear-gradient(45deg, #ffc107, #ff6b35);
+        box-shadow: 
+            0 8px 25px rgba(255, 193, 7, 0.4),
+            inset 0 1px 0 rgba(255, 255, 255, 0.2);
+        color: #000;
+    }
+    
+    .btn-warning-neon:hover {
+        background: linear-gradient(45deg, #e0a800, #e55a2b);
+        box-shadow: 
+            0 15px 35px rgba(255, 193, 7, 0.6),
+            inset 0 1px 0 rgba(255, 255, 255, 0.3);
+        color: #000;
+    }
+    
+    .section-title {
+        background: linear-gradient(45deg, #ffffff, #cccccc, #ffffff);
+        background-size: 200% 200%;
+        -webkit-background-clip: text;
+        -webkit-text-fill-color: transparent;
+        background-clip: text;
+        animation: gradientShift 3s ease-in-out infinite;
+        text-align: center;
+        margin-bottom: 4rem;
+        font-weight: 700;
+        letter-spacing: 1px;
+    }
+    
+    .feature-list {
+        background: rgba(30, 30, 30, 0.8);
+        backdrop-filter: blur(20px);
+        border-radius: 20px;
+        border: 1px solid rgba(255, 255, 255, 0.1);
+        padding: 3rem;
+        box-shadow: 
+            0 15px 35px rgba(0, 0, 0, 0.3),
+            inset 0 1px 0 rgba(255, 255, 255, 0.1);
+    }
+    
+    .feature-list li {
+        color: #e0e0e0;
+        margin-bottom: 1.5rem;
+        transition: all 0.3s ease;
+        padding: 10px 0;
+        border-radius: 10px;
+        padding-left: 15px;
+    }
+    
+    .feature-list li:hover {
+        color: #ffffff;
+        background: rgba(255, 255, 255, 0.05);
+        transform: translateX(10px);
+        padding-left: 25px;
+    }
+    
+    .check-icon {
+        color: #28a745;
+        text-shadow: 0 0 15px rgba(40, 167, 69, 0.6);
+        animation: pulse 2s ease-in-out infinite;
+    }
+    
+    @@keyframes pulse {
+        0%, 100% { transform: scale(1); }
+        50% { transform: scale(1.1); }
+    }
+    
+    /* Floating animations */
+    .floating {
+        animation: floating 3s ease-in-out infinite;
+    }
+    
+    @@keyframes floating {
+        0%, 100% { transform: translateY(0px); }
+        50% { transform: translateY(-10px); }
+    }
+    
+    /* Scroll animations */
+    .fade-in {
+        opacity: 0;
+        transform: translateY(30px);
+        animation: fadeInUp 0.8s ease forwards;
+    }
+    
+    @@keyframes fadeInUp {
+        to {
+            opacity: 1;
+            transform: translateY(0);
+        }
+    }
+</style>
+
+<div class="container-fluid">
+    <div class="row">
+        <div class="col-12">
+            <div class="hero-section floating fade-in">
+                <div class="hero-content">
+                    <h1 class="display-2 glow-text mb-4">
+                        <i class="fas fa-car me-3 floating"></i>GalleryApp
+                    </h1>
+                    <p class="lead fs-2 mb-4" style="color: #e0e0e0; font-weight: 300;">
+                        🚗 Araba ve Fotoğraf Koleksiyonunuzun Dijital Evreni 📸
+                    </p>
+                    <hr class="my-4" style="border: none; height: 2px; background: linear-gradient(90deg, transparent, rgba(0, 123, 255, 0.5), transparent); width: 400px; margin: 2rem auto;">
+                    <p class="fs-4 mb-5" style="color: #cccccc; max-width: 800px; margin: 0 auto; line-height: 1.6;">
+                        BMW, Mercedes, Audi ve daha fazlası... Klasik ve modern arabalarınızı dijital galeride yaşatın. 
+                        <span style="color: #00d4ff;">Premium deneyim</span> için tasarlandı.
+                    </p>
+                    <div class="d-flex justify-content-center gap-4 flex-wrap">
+                        <a asp-controller="Car" asp-action="Index" class="btn btn-neon btn-lg">
+                            <i class="fas fa-car me-2"></i>Araba Galerisi
+                        </a>
+                        <a asp-controller="Photo" asp-action="Index" class="btn btn-success-neon btn-lg">
+                            <i class="fas fa-images me-2"></i>Fotoğraf Galerisi
+                        </a>
+                        <a asp-controller="Category" asp-action="Index" class="btn btn-warning-neon btn-lg">
+                            <i class="fas fa-tags me-2"></i>Kategoriler
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col-lg-4 col-md-6 mb-4">
+            <div class="feature-card h-100 fade-in" style="animation-delay: 0.2s;">
+                <div class="card-body text-center p-5">
+                    <div class="floating">
+                        <i class="fas fa-car fa-5x feature-icon mb-4"></i>
+                    </div>
+                    <h3 class="card-title text-white mb-3" style="font-weight: 600;">🚗 Araba Galerisi</h3>
+                    <p class="card-text text-light mb-4" style="line-height: 1.6;">
+                        Klasik ve modern arabalarınızı ekleyin, marka, model, yıl ve teknik özelliklerini kaydedin. 
+                        <span style="color: #00d4ff;">Premium araç koleksiyonunuz</span> için tasarlandı.
+                    </p>
+                    <a asp-controller="Car" asp-action="Index" class="btn btn-neon">
+                        <i class="fas fa-car me-2"></i>Galeriye Git
+                    </a>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-lg-4 col-md-6 mb-4">
+            <div class="feature-card h-100 fade-in" style="animation-delay: 0.4s;">
+                <div class="card-body text-center p-5">
+                    <div class="floating" style="animation-delay: 0.5s;">
+                        <i class="fas fa-images fa-5x feature-icon mb-4" style="background: linear-gradient(45deg, #28a745, #20c997, #28a745); background-size: 200% 200%; -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text; filter: drop-shadow(0 0 20px rgba(40, 167, 69, 0.5)); animation: gradientShift 3s ease-in-out infinite;"></i>
+                    </div>
+                    <h3 class="card-title text-white mb-3" style="font-weight: 600;">📸 Fotoğraf Galerisi</h3>
+                    <p class="card-text text-light mb-4" style="line-height: 1.6;">
+                        Fotoğraflarınızı kategorilere ayırarak organize edin ve güzel bir koleksiyon oluşturun. 
+                        <span style="color: #20c997;">Anılarınızı dijitalleştirin</span>.
+                    </p>
+                    <a asp-controller="Photo" asp-action="Index" class="btn btn-success-neon">
+                        <i class="fas fa-images me-2"></i>Galeriye Git
+                    </a>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-lg-4 col-md-6 mb-4">
+            <div class="feature-card h-100 fade-in" style="animation-delay: 0.6s;">
+                <div class="card-body text-center p-5">
+                    <div class="floating" style="animation-delay: 1s;">
+                        <i class="fas fa-tags fa-5x feature-icon mb-4" style="background: linear-gradient(45deg, #ffc107, #ff6b35, #ffc107); background-size: 200% 200%; -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text; filter: drop-shadow(0 0 20px rgba(255, 193, 7, 0.5)); animation: gradientShift 3s ease-in-out infinite;"></i>
+                    </div>
+                    <h3 class="card-title text-white mb-3" style="font-weight: 600;">🏷️ Kategoriler</h3>
+                    <p class="card-text text-light mb-4" style="line-height: 1.6;">
+                        Arabalarınızı ve fotoğraflarınızı kategorilere ayırarak daha iyi organize edin. 
+                        <span style="color: #ff6b35;">Kolay erişim</span> için tasarlandı.
+                    </p>
+                    <a asp-controller="Category" asp-action="Index" class="btn btn-warning-neon">
+                        <i class="fas fa-tags me-2"></i>Yönet
+                    </a>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="row mt-5">
+        <div class="col-12">
+            <h2 class="section-title fade-in">
+                <i class="fas fa-star me-3 floating"></i>✨ Premium Özellikler
+            </h2>
+            <div class="feature-list fade-in" style="animation-delay: 0.3s;">
+                <div class="row">
+                    <div class="col-md-6">
+                        <ul class="list-unstyled">
+                            <li class="mb-4 fade-in" style="animation-delay: 0.5s;">
+                                <i class="fas fa-check check-icon me-3"></i> 
+                                <strong>Modern UI/UX Tasarım</strong> - Glassmorphism ve neon efektler
+                            </li>
+                            <li class="mb-4 fade-in" style="animation-delay: 0.7s;">
+                                <i class="fas fa-check check-icon me-3"></i> 
+                                <strong>Responsive Layout</strong> - Mobil ve desktop uyumlu
+                            </li>
+                            <li class="mb-4 fade-in" style="animation-delay: 0.9s;">
+                                <i class="fas fa-check check-icon me-3"></i> 
+                                <strong>Animasyonlar</strong> - Smooth geçişler ve hover efektleri
+                            </li>
+                            <li class="mb-4 fade-in" style="animation-delay: 1.1s;">
+                                <i class="fas fa-check check-icon me-3"></i> 
+                                <strong>Entity Framework Core</strong> - Güçlü veritabanı yönetimi
+                            </li>
+                        </ul>
+                    </div>
+                    <div class="col-md-6">
+                        <ul class="list-unstyled">
+                            <li class="mb-4 fade-in" style="animation-delay: 1.3s;">
+                                <i class="fas fa-check check-icon me-3"></i> 
+                                <strong>CRUD İşlemleri</strong> - Tam veri yönetimi
+                            </li>
+                            <li class="mb-4 fade-in" style="animation-delay: 1.5s;">
+                                <i class="fas fa-check check-icon me-3"></i> 
+                                <strong>Kategori Sistemi</strong> - Organize edilmiş içerik
+                            </li>
+                            <li class="mb-4 fade-in" style="animation-delay: 1.7s;">
+                                <i class="fas fa-check check-icon me-3"></i> 
+                                <strong>Detay Sayfaları</strong> - Kapsamlı bilgi görüntüleme
+                            </li>
+                            <li class="mb-4 fade-in" style="animation-delay: 1.9s;">
+                                <i class="fas fa-check check-icon me-3"></i> 
+                                <strong>Koyu Tema</strong> - Göz yormayan modern görünüm
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+    // Scroll animasyonları için
+    document.addEventListener('DOMContentLoaded', function() {
+        const observerOptions = {
+            threshold: 0.1,
+            rootMargin: '0px 0px -50px 0px'
+        };
+
+        const observer = new IntersectionObserver(function(entries) {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.style.opacity = '1';
+                    entry.target.style.transform = 'translateY(0)';
+                }
+            });
+        }, observerOptions);
+
+        // Tüm fade-in elementlerini gözlemle
+        document.querySelectorAll('.fade-in').forEach(el => {
+            observer.observe(el);
+        });
+    });
+</script>

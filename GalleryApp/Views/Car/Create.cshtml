@@ -1,0 +1,158 @@
+@model GalleryApp.Models.Car
+
+@{
+    ViewData["Title"] = "Yeni Araba Ekle";
+}
+
+<div class="container">
+    <div class="row justify-content-center">
+        <div class="col-lg-8">
+            <div class="card shadow">
+                <div class="card-header bg-success text-white">
+                    <h2 class="card-title mb-0">
+                        <i class="fas fa-plus-circle"></i> Yeni Araba Ekle
+                    </h2>
+                </div>
+                <div class="card-body">
+                    <form asp-action="Create" method="post">
+                        <div asp-validation-summary="ModelOnly" class="alert alert-danger" role="alert"></div>
+
+                        <div class="row">
+                            <div class="col-md-6 mb-3">
+                                <label asp-for="Name" class="form-label">
+                                    <i class="fas fa-car text-primary"></i> Araba Adı *
+                                </label>
+                                <input asp-for="Name" class="form-control" placeholder="Örn: BMW 3 Serisi" />
+                                <span asp-validation-for="Name" class="text-danger"></span>
+                            </div>
+
+                            <div class="col-md-6 mb-3">
+                                <label asp-for="Brand" class="form-label">
+                                    <i class="fas fa-industry text-primary"></i> Marka *
+                                </label>
+                                <input asp-for="Brand" class="form-control" placeholder="Örn: BMW, Mercedes, Audi" />
+                                <span asp-validation-for="Brand" class="text-danger"></span>
+                            </div>
+                        </div>
+
+                        <div class="row">
+                            <div class="col-md-6 mb-3">
+                                <label asp-for="Model" class="form-label">
+                                    <i class="fas fa-car-side text-primary"></i> Model *
+                                </label>
+                                <input asp-for="Model" class="form-control" placeholder="Örn: 3 Serisi, C-Class" />
+                                <span asp-validation-for="Model" class="text-danger"></span>
+                            </div>
+
+                            <div class="col-md-6 mb-3">
+                                <label asp-for="Year" class="form-label">
+                                    <i class="fas fa-calendar text-primary"></i> Yıl *
+                                </label>
+                                <input asp-for="Year" type="number" class="form-control" min="1900" max="2024" placeholder="2020" />
+                                <span asp-validation-for="Year" class="text-danger"></span>
+                            </div>
+                        </div>
+
+                        <div class="row">
+                            <div class="col-md-6 mb-3">
+                                <label asp-for="EngineType" class="form-label">
+                                    <i class="fas fa-cogs text-primary"></i> Motor Tipi *
+                                </label>
+                                <select asp-for="EngineType" class="form-select">
+                                    <option value="">Motor Tipi Seçin</option>
+                                    <option value="Benzin">Benzin</option>
+                                    <option value="Dizel">Dizel</option>
+                                    <option value="Hibrit">Hibrit</option>
+                                    <option value="Elektrik">Elektrik</option>
+                                    <option value="LPG">LPG</option>
+                                </select>
+                                <span asp-validation-for="EngineType" class="text-danger"></span>
+                            </div>
+
+                            <div class="col-md-6 mb-3">
+                                <label asp-for="Horsepower" class="form-label">
+                                    <i class="fas fa-horse text-primary"></i> Motor Gücü *
+                                </label>
+                                <input asp-for="Horsepower" class="form-control" placeholder="Örn: 150 HP, 2.0 TDI" />
+                                <span asp-validation-for="Horsepower" class="text-danger"></span>
+                            </div>
+                        </div>
+
+                        <div class="mb-3">
+                            <label asp-for="CategoryId" class="form-label">
+                                <i class="fas fa-tags text-primary"></i> Kategori *
+                            </label>
+                            <select asp-for="CategoryId" class="form-select" asp-items="@(new SelectList(ViewBag.Categories, "Id", "Name"))">
+                                <option value="">Kategori Seçin</option>
+                            </select>
+                            <span asp-validation-for="CategoryId" class="text-danger"></span>
+                        </div>
+
+                        <div class="mb-3">
+                            <label asp-for="ImageUrl" class="form-label">
+                                <i class="fas fa-image text-primary"></i> Resim URL'si *
+                            </label>
+                            <input asp-for="ImageUrl" class="form-control" placeholder="https://example.com/araba-resmi.jpg" />
+                            <span asp-validation-for="ImageUrl" class="text-danger"></span>
+                            <div class="form-text">Arabanın resmi için bir URL girin. Daha sonra kendi resimlerinizi yükleyebilirsiniz.</div>
+                        </div>
+
+                        <div class="mb-3">
+                            <label asp-for="Description" class="form-label">
+                                <i class="fas fa-info-circle text-primary"></i> Açıklama
+                            </label>
+                            <textarea asp-for="Description" class="form-control" rows="4" placeholder="Araba hakkında detaylı bilgi yazabilirsiniz..."></textarea>
+                            <span asp-validation-for="Description" class="text-danger"></span>
+                        </div>
+
+                        <div class="d-flex gap-2">
+                            <button type="submit" class="btn btn-success">
+                                <i class="fas fa-save"></i> Kaydet
+                            </button>
+                            <a asp-action="Index" class="btn btn-secondary">
+                                <i class="fas fa-times"></i> İptal
+                            </a>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}
+
+<style>
+    .card {
+        border: none;
+        border-radius: 15px;
+    }
+
+    .card-header {
+        border-radius: 15px 15px 0 0 !important;
+    }
+
+    .form-control, .form-select {
+        border-radius: 10px;
+        border: 2px solid #e9ecef;
+        transition: border-color 0.3s ease, box-shadow 0.3s ease;
+    }
+
+    .form-control:focus, .form-select:focus {
+        border-color: #0d6efd;
+        box-shadow: 0 0 0 0.2rem rgba(13, 110, 253, 0.25);
+    }
+
+    .btn {
+        border-radius: 10px;
+        padding: 10px 20px;
+        font-weight: 500;
+    }
+
+    .form-label {
+        font-weight: 600;
+        color: #495057;
+    }
+</style>

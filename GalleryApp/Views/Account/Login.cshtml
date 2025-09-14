@@ -1,0 +1,79 @@
+@model LoginViewModel
+
+@{
+    ViewData["Title"] = "Giriş Yap";
+}
+
+<div class="container">
+    <div class="row justify-content-center">
+        <div class="col-md-6">
+            <div class="card shadow-lg" style="background: rgba(30, 30, 30, 0.9); border: 1px solid rgba(255, 255, 255, 0.1); border-radius: 20px;">
+                <div class="card-header text-center" style="background: linear-gradient(45deg, #007bff, #0056b3); border-radius: 20px 20px 0 0; border: none;">
+                    <h2 class="text-white mb-0">
+                        <i class="fas fa-sign-in-alt me-2"></i>Giriş Yap
+                    </h2>
+                </div>
+                <div class="card-body p-4">
+                    <form asp-action="Login" method="post">
+                        <div asp-validation-summary="ModelOnly" class="alert alert-danger" role="alert"></div>
+
+                        <div class="mb-3">
+                            <label asp-for="Email" class="form-label text-white">
+                                <i class="fas fa-envelope text-primary"></i> E-posta *
+                            </label>
+                            <input asp-for="Email" class="form-control" style="background: rgba(255, 255, 255, 0.1); border: 1px solid rgba(255, 255, 255, 0.2); color: white;" placeholder="E-posta adresinizi girin" />
+                            <span asp-validation-for="Email" class="text-danger"></span>
+                        </div>
+
+                        <div class="mb-3">
+                            <label asp-for="Password" class="form-label text-white">
+                                <i class="fas fa-lock text-primary"></i> Şifre *
+                            </label>
+                            <input asp-for="Password" type="password" class="form-control" style="background: rgba(255, 255, 255, 0.1); border: 1px solid rgba(255, 255, 255, 0.2); color: white;" placeholder="Şifrenizi girin" />
+                            <span asp-validation-for="Password" class="text-danger"></span>
+                        </div>
+
+                        <div class="mb-3 form-check">
+                            <input asp-for="RememberMe" class="form-check-input" style="background: rgba(255, 255, 255, 0.1); border: 1px solid rgba(255, 255, 255, 0.2);" />
+                            <label asp-for="RememberMe" class="form-check-label text-white">
+                                Beni hatırla
+                            </label>
+                        </div>
+
+                        <div class="d-grid gap-2">
+                            <button type="submit" class="btn btn-primary btn-lg" style="border-radius: 10px; font-weight: 600;">
+                                <i class="fas fa-sign-in-alt me-2"></i>Giriş Yap
+                            </button>
+                        </div>
+                    </form>
+
+                    <hr style="border-color: rgba(255, 255, 255, 0.2);">
+                    
+                    <div class="text-center">
+                        <p class="text-white mb-0">Hesabınız yok mu?</p>
+                        <a asp-action="Register" class="btn btn-outline-success mt-2" style="border-radius: 10px;">
+                            <i class="fas fa-user-plus me-2"></i>Kayıt Ol
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}
+
+<style>
+    .form-control:focus {
+        background: rgba(255, 255, 255, 0.15) !important;
+        border-color: #007bff !important;
+        box-shadow: 0 0 0 0.2rem rgba(0, 123, 255, 0.25) !important;
+        color: white !important;
+    }
+    
+    .form-control::placeholder {
+        color: rgba(255, 255, 255, 0.6);
+    }
+</style>
