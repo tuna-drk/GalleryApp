@@ -110,24 +110,6 @@ GalleryApp/
 └── wwwroot/            # Statik dosyalar
 ```
 
-## 🔧 Yapılandırma
-
-### Veritabanı Bağlantısı
-`appsettings.json` dosyasında connection string'i düzenleyin:
-
-```json
-{
-  "ConnectionStrings": {
-    "DefaultConnection": "Server=(localdb)\\mssqllocaldb;Database=GalleryAppDb;Trusted_Connection=true;MultipleActiveResultSets=true;TrustServerCertificate=true"
-  }
-}
-```
-
-### Güvenlik
-- Production ortamında `appsettings.Production.json` kullanın
-- Hassas bilgileri Azure Key Vault'ta saklayın
-- HTTPS kullanın
-
 ## 🎯 Kullanım
 
 1. **İlk Kurulum**: İlk kullanıcı olarak kayıt olun (otomatik admin olur)
@@ -144,13 +126,6 @@ GalleryApp/
 4. Push yapın (`git push origin feature/amazing-feature`)
 5. Pull Request oluşturun
 
-## 📝 Lisans
-
-Bu proje MIT lisansı altında lisanslanmıştır.
-
-## 👨‍💻 Geliştirici
-
-**Mustafa** - [GitHub](https://github.com/kullaniciadi)
 
 ## 🙏 Teşekkürler
 
